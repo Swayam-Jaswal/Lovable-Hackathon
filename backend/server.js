@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
-const path = require("path");          // <-- new
+const path = require("path");   // <-- only declare once
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/auth.routes");
 const blogRoutes = require("./routes/blog.routes");
@@ -43,9 +43,6 @@ app.use("/auth", authRoutes);
 app.use("/blogs", blogRoutes);
 
 // Serve React frontend in production
-const path = require("path");
-
-// Serve static files from Vite build (dist) folder
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "frontend/dist")));
 
@@ -54,7 +51,6 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(path.join(__dirname, "frontend/dist", "index.html"));
   });
 }
-
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
